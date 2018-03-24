@@ -56,6 +56,11 @@ public class EstudanteForm extends javax.swing.JFrame {
         jtableest = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Cod.");
 
@@ -229,6 +234,10 @@ public class EstudanteForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnexcluActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        list();
+    }//GEN-LAST:event_formWindowOpened
 
     public void listar() {
         DefaultTableModel model = (DefaultTableModel) jtableest.getModel();
