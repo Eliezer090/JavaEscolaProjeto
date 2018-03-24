@@ -15,7 +15,7 @@ public class EstudanteModel {
     private int estCod;
     private String estnome;
     private String curso;
-    private Date dataMat;
+    private String dataMat;
     private char status;
 
     public int getEstCod() {
@@ -42,19 +42,19 @@ public class EstudanteModel {
         this.curso = curso;
     }
 
-    public Date getDataMat() {
-        return dataMat;
-    }
-
-    public void setDataMat(Date dataMat) {
-        this.dataMat = dataMat;
-    }
-
     public char getStatus() {
         return status;
     }
 
     public void setStatus(char status) {
         this.status = status;
+    }
+
+    public String getDataMat() {
+        return dataMat;
+    }
+
+    public void setDataMat(String dataMat) {
+        this.dataMat = dataMat;
     }
 }

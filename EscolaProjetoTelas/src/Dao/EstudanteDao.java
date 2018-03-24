@@ -60,10 +60,10 @@ public class EstudanteDao {
                 objeto.setEstCod(r.getInt("ESTUDANTE_ID"));
                 objeto.setEstnome(r.getString("NOME"));
                 objeto.setCurso(r.getString("CURSO"));
-                objeto.setDataMat(r.getDate("DATA_MATRICULA"));
                 objeto.setStatus(r.getString("STATUS").charAt(0));
+                objeto.setDataMat(r.getString("DATA_MATRICULA"));                
                 list.add(objeto);
-            }
+            }     
             r.close();
             p.close();
         } catch (Exception e) {

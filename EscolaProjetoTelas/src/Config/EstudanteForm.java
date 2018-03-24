@@ -5,6 +5,13 @@
  */
 package Config;
 
+import Dao.EdioraDao;
+import Dao.EstudanteDao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import model.EditorModel;
 import model.EstudanteModel;
 
 /**
@@ -16,7 +23,10 @@ public class EstudanteForm extends javax.swing.JFrame {
     /**
      * Creates new form EstudanteForm
      */
+    private EstudanteDao estdao;
+
     public EstudanteForm() {
+        estdao = new EstudanteDao();
         initComponents();
     }
 
@@ -67,8 +77,18 @@ public class EstudanteForm extends javax.swing.JFrame {
         });
 
         btnEdit.setText("Editar");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnexclu.setText("Excluir");
+        btnexclu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnexcluActionPerformed(evt);
+            }
+        });
 
         jtableest.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,8 +187,67 @@ public class EstudanteForm extends javax.swing.JFrame {
         EstudanteModel est = new EstudanteModel();
         est.setEstnome(jnome.getText());
         est.setCurso(jcurso.getText());
-       // est.setDataMat(jdatamat.getText());
+        est.setDataMat(jdatamat.getText());
+        est.setStatus(jstatus.getText().charAt(0));
+        try {
+            estdao.inserir(est);
+            listar();
+            clear();
+        } catch (SQLException ex) {
+            Logger.getLogger(EstudanteForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btninsertActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if (!"".equals(jcod.getText())) {
+            EstudanteModel est = new EstudanteModel();
+            est.setEstnome(jnome.getText());
+            est.setEstCod(Integer.parseInt(jcod.getText()));
+            est.setCurso(jcurso.getText());
+            est.setDataMat(jdatamat.getText());
+            est.setStatus(jstatus.getText().charAt(0));
+            try {
+                estdao.alterar(est);
+                listar();
+                clear();
+            } catch (SQLException ex) {
+                Logger.getLogger(EstudanteForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnexcluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexcluActionPerformed
+        if (!"".equals(jcod.getText())) {
+            EstudanteModel est = new EstudanteModel();
+            est.setEstCod(Integer.parseInt(jcod.getText()));
+            try {
+                estdao.delear(est);
+                listar();
+                clear();
+            } catch (SQLException ex) {
+                Logger.getLogger(EstudanteForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnexcluActionPerformed
+
+    public void listar() {
+        DefaultTableModel model = (DefaultTableModel) jtableest.getModel();
+        //Limpar Tabela
+        model.setNumRows(0);
+        //busca lista objetos
+        for (EstudanteModel est : estdao.findALL()) {
+            String linha[] = {"" + est.getEstCod(), est.getEstnome(), est.getCurso(), est.getDataMat()};
+            model.addRow(linha);
+        }
+    }
+
+    public void clear() {
+        jcod.setText("");
+        jnome.setText("");
+        jcurso.setText("");
+        jdatamat.setText("");
+        jstatus.setText("");
+    }
 
     /**
      * @param args the command line arguments
