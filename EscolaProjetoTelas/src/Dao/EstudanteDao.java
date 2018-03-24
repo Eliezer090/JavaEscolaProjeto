@@ -45,8 +45,8 @@ public class EstudanteDao {
         PreparedStatement p = connection.prepareStatement(sql);
         p.execute();
     }
-    
-            public List<EstudanteModel> findALL() {
+
+    public List<EstudanteModel> findALL() {
         //Lisa para manter os valores do resultset
         List<EstudanteModel> list = new ArrayList<>();
         EstudanteModel objeto;
@@ -61,9 +61,9 @@ public class EstudanteDao {
                 objeto.setEstnome(r.getString("NOME"));
                 objeto.setCurso(r.getString("CURSO"));
                 objeto.setStatus(r.getString("STATUS").charAt(0));
-                objeto.setDataMat(r.getString("DATA_MATRICULA"));                
+                objeto.setDataMat(r.getString("DATA_MATRICULA"));
                 list.add(objeto);
-            }     
+            }
             r.close();
             p.close();
         } catch (Exception e) {
